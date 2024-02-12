@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ServicelistComponent } from './admin/service/servicelist/servicelist.component';
+import { ServicecreateComponent } from './admin/service/servicecreate/servicecreate.component';
+
+
+const routes: Routes = [
+  {path: 'admin/service', component : ServicelistComponent},
+  {path: 'admin/service/create', component : ServicecreateComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

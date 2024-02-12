@@ -8,9 +8,32 @@ const ServiceSchema = new mongoose.Schema({
     lowercase: true,
   },
   Description: String,
-  Duree: String,
+  Duree: Number,
   Prix: Number,
-  Commission: Number
+  Commission: Number,
+  CommissionEmploye: Number,
+  Employes : [
+    {
+      type : mongoose.Schema.Types.ObjectId, ref: 'employes'
+    }
+  ],
+  Image: {
+    data: Buffer, // Pour stocker le contenu de l'image
+    contentType: String // Pour stocker le type de contenu de l'image
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+ServiceSchema.pre('save', function (next) {
+  // Vérifier si les champs nécessaires pour calculer la commission sont définis
+  if (this.Prix !== undefined && this.Commission !== undefined) {
+    // Calculer la commission de l'employé
+    this.CommissionEmploye = (this.Commission * this.Prix) / 100;
+  }
+  next();
 });
 
 const Service = mongoose.model("services", ServiceSchema);

@@ -6,12 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/admin/service" method="POST">
+    <form action="/service" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Nom" name="Nom">
         <input type="text" placeholder="Description" name="Description">
         <input type="number" placeholder="Duree" name="Duree">
         <input type="number" placeholder="Prix" name="Prix">
         <input type="number" placeholder="Commission" name="Commission">
+        <input type="file" name="image" id="image">
         <button type="submit">Submit</button>
     </form>
 </body>

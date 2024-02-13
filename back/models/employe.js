@@ -14,6 +14,10 @@ const EmployeSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'services'
     },
+    imagePath: { 
+        type: String,
+        required: true 
+    },
     created_at: {
         type: Date,
         default: Date.now

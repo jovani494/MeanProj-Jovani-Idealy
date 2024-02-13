@@ -17,9 +17,9 @@ const ServiceSchema = new mongoose.Schema({
       type : mongoose.Schema.Types.ObjectId, ref: 'employes'
     }
   ],
-  Image: {
-    data: Buffer, // Pour stocker le contenu de l'image
-    contentType: String // Pour stocker le type de contenu de l'image
+  imagePath: {
+    type: String,
+    required: true 
   },
   created_at: {
     type: Date,

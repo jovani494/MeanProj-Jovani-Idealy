@@ -1,31 +1,129 @@
-const express = require("express");
+const express = require('express')
+const ServiceModel = require('../models/service');
+const router = new express.Router()
+const multer = require("multer");
+const MIME_TYPE_MAP = {
+    "image/png": "png",
+    "image/jpeg": "jpg",
+    "image/jpg": "jpg",
+    "image/gif": "gif"
+};
 
-const bodyParser = require('body-parser');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const isValid = MIME_TYPE_MAP[file.mimetype];
 
-const multer = require('multer');
-
-filename = '';
-const myStorage = multer.diskStorage({
-    destination : './uploads',
-    filename : (req, file, redirect) => {
-        let date = Date.now();
-        let fl = date +'.' + file.mimetype.split('/')[1];
-        redirect(null,fl);
-        filename = fl;
+        let error = new Error("Invalid mime type");
+        if (isValid) {
+            error = null;
+        }
+        cb(error, "images");
+    },
+    filename: (req, file, cb) => {
+        const name = file.originalname
+            .toLowerCase()
+            .split(" ")
+            .join("-");
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        cb(null, name + "-" + Date.now() + "." + ext);
     }
-})
+});
 
-const upload = multer({storage:myStorage});
+router.post("/service",multer({ storage: storage }).single("image"),(req, res, next) => {
+        const url = req.protocol + "://" + req.get("host")
+        const service = new ServiceModel({
+            Nom : req.body.Nom,
+            Description: req.body.Description,
+            Duree: req.body.Duree ,
+            Prix: req.body.Prix,
+            Commission: req.body.Commission,
+            imagePath: url + "/images/" + req.file.filename,
+        })
+        service.save().
+            then(service => {
+                if(service){
+                    res.status(201).json({
+                        message: "Service added successfully",
+                        service: {
+                            ...service,
+                            id: service._id
+                        }
+                    })
+                }
+                else{
+                    res.status(500).json({ message: "Error Adding Service" });
+                }
+                
+            })
+            .catch(e => {
+            })
+    })
+   
+router.put("/service/:id",multer({ storage: storage }).single("image"),(req, res, next) => {
+        let imagePath = req.body.imagePath;
+        if (req.file) {
+            const url = req.protocol + "://" + req.get("host");
+            imagePath = url + "/images/" + req.file.filename
+        }
+        const service = new ServiceModel({
+            _id: req.body.id,
+            Nom : req.body.Nom,
+            Description: req.body.Description,
+            Duree: req.body.Duree ,
+            Prix: req.body.Prix,
+            Commission: req.body.Commission,
+            imagePath: imagePath,
+        });
+        ServiceModel.updateOne(
+            { _id: req.params.id },
+            service
+          ).then(result => {
+            if(result){
+                res.status(200).json({ message: "Update successful!" });
+            }
+            
+            else {
+                res.status(500).json({ message: "Error Upating service" });
+            }
+        });
+    }
+);
 
-const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+router.get("/service", (req, res, next) => {
+    ServiceModel.find().then(documents => {
+        if(documents){
+            res.status(200).json({
+                message: "Services fetched successfully!",
+                services: documents
+            });
+        }
+        else{
+            res.status(404).json({ message: "Service not found!" });
+        }
+       
+    });
+});
 
-const ServiceController = require('../controllers/services');
+router.get("/service/detail/:id", (req, res, next) => {
+    ServiceModel.findById(req.params.id).then(service => {
+      if (service) {
+        res.status(200).json(service);
+      } else {
+        res.status(404).json({ message: "service not found!" });
+      }
+    });
+  });
+  
+router.delete("/service/delete/:id", (req, res, next) => {
+    ServiceModel.deleteOne({ _id: req.params.id}).then(
+      result => {
+        if (result.n > 0) {
+          res.status(200).json({ message: "Deletion successful!" });
+        } else {
+            return res.status(401).json({ message: "Not authorized!!" });
+        }
+      }
+    );
+  });
 
-app.get('/service', ServiceController.findAll);
-app.get('/service/:id', ServiceController.findOne);
-app.post('/service', upload.any('image'),ServiceController.create);
-app.patch('/service/update/:id', ServiceController.update);
-app.delete('/service/delete/:id', ServiceController.destroy);
-
-module.exports = app;
+module.exports = router

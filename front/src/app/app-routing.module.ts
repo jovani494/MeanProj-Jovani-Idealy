@@ -7,7 +7,7 @@ import { ServicedetailsComponent } from './admin/service/servicedetails/serviced
 const routes: Routes = [
   {path: 'admin/service', component : ServicelistComponent},
   {path: 'admin/service/create', component : ServicecreateComponent},
-  {path: 'admin/service/:id', component : ServicedetailsComponent}
+  {path: 'admin/service/detail/:id', component : ServicedetailsComponent}
 ];
 
 @NgModule({

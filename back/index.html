@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/service" method="POST" enctype="multipart/form-data">
-        <input type="text" placeholder="Nom" name="Nom">
-        <input type="text" placeholder="Description" name="Description">
-        <input type="number" placeholder="Duree" name="Duree">
-        <input type="number" placeholder="Prix" name="Prix">
-        <input type="number" placeholder="Commission" name="Commission">
-        <input type="file" name="image" id="image">
+    <form action="/admin/register" method="POST">
+        <input type="text" placeholder="name" name="name">
+        <input type="email" placeholder="email" name="email">
+        <input type="text" placeholder="username" name="username">
+        <input type="password" placeholder="password" name="password">>
         <button type="submit">Submit</button>
     </form>
 </body>

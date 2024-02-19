@@ -5,6 +5,7 @@ exports.create = async (req, res) => {
     if (!req.body.Nom && !req.body.Description && !req.body.Duree && !req.body.Commission && !req.body.Prix) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
+    
     const service = new ServiceModel({
         Nom : req.body.Nom,
         Description: req.body.Description,
@@ -12,6 +13,7 @@ exports.create = async (req, res) => {
         Prix: req.body.Prix,
         Commission: req.body.Commission,
     });
+    
     await service.save().then(data => {
         res.send({
             message:"Service created successfully!!",
@@ -54,7 +56,7 @@ exports.update = async (req, res) => {
     
     const id = req.params.id;
     
-    await ServiceModel.findByIdAndUpdate(id, req.body, { useFindAndModify: false }).then(data => {
+    await ServiceModel.findByIdAndUpdate(id, req.body, {new:true}).then(data => {
         if (!data) {
             res.status(404).send({
                 message: `service not found.`
@@ -71,19 +73,23 @@ exports.update = async (req, res) => {
 
 // Delete a service with the specified id in the request
 exports.destroy = async (req, res) => {
-    await ServiceModel.findByIdAndRemove(req.params.id).then(data => {
-        if (!data) {
-          res.status(404).send({
-            message: `service not found.`
-          });
-        } else {
-          res.send({
-            message: "service deleted successfully!"
-          });
-        }
-    }).catch(err => {
-        res.status(500).send({
-          message: err.message
-        });
-    });
+    const id = req.params.id;
+    try{
+     const deleteservices = await ServiceModel.findByIdAndDelete(id, { useFindAndModify: false })
+    if(!deleteservices)
+    {
+        return res.status(404).send();
+    }  
+   
+        res.status(201).send(
+            {
+                "status" : true,
+                "message" : "Service Deletedd!!!!!!!!!!!!!!!!"
+            });
+    }
+    catch(error)
+    {
+        res.status(400).send(error);
+
+    }
 };

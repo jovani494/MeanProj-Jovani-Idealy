@@ -1,129 +1,68 @@
-const express = require('express')
-const ServiceModel = require('../models/service');
-const router = new express.Router()
-const multer = require("multer");
-const MIME_TYPE_MAP = {
-    "image/png": "png",
-    "image/jpeg": "jpg",
-    "image/jpg": "jpg",
-    "image/gif": "gif"
-};
+const express = require("express");
+const ServiceController = require('../controllers/services')
+const bodyParser = require('body-parser');
+const app = express();
+
+const multer = require('multer');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.get('/service', ServiceController.findAll);
+app.get('/service/detail/:id', ServiceController.findOne);
+app.post('/service/create/', ServiceController.create);
+app.put('/service/update/:id', ServiceController.update);
+app.delete('/service/delete/:id', ServiceController.destroy);
+
+const DIR = "./public/";
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const isValid = MIME_TYPE_MAP[file.mimetype];
-
-        let error = new Error("Invalid mime type");
-        if (isValid) {
-            error = null;
-        }
-        cb(error, "images");
-    },
-    filename: (req, file, cb) => {
-        const name = file.originalname
-            .toLowerCase()
-            .split(" ")
-            .join("-");
-        const ext = MIME_TYPE_MAP[file.mimetype];
-        cb(null, name + "-" + Date.now() + "." + ext);
-    }
+  destination: (req, file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, fileName);
+  },
 });
 
-router.post("/service",multer({ storage: storage }).single("image"),(req, res, next) => {
-        const url = req.protocol + "://" + req.get("host")
-        const service = new ServiceModel({
-            Nom : req.body.Nom,
-            Description: req.body.Description,
-            Duree: req.body.Duree ,
-            Prix: req.body.Prix,
-            Commission: req.body.Commission,
-            imagePath: url + "/images/" + req.file.filename,
-        })
-        service.save().
-            then(service => {
-                if(service){
-                    res.status(201).json({
-                        message: "Service added successfully",
-                        service: {
-                            ...service,
-                            id: service._id
-                        }
-                    })
-                }
-                else{
-                    res.status(500).json({ message: "Error Adding Service" });
-                }
-                
-            })
-            .catch(e => {
-            })
-    })
-   
-router.put("/service/:id",multer({ storage: storage }).single("image"),(req, res, next) => {
-        let imagePath = req.body.imagePath;
-        if (req.file) {
-            const url = req.protocol + "://" + req.get("host");
-            imagePath = url + "/images/" + req.file.filename
-        }
-        const service = new ServiceModel({
-            _id: req.body.id,
-            Nom : req.body.Nom,
-            Description: req.body.Description,
-            Duree: req.body.Duree ,
-            Prix: req.body.Prix,
-            Commission: req.body.Commission,
-            imagePath: imagePath,
-        });
-        ServiceModel.updateOne(
-            { _id: req.params.id },
-            service
-          ).then(result => {
-            if(result){
-                res.status(200).json({ message: "Update successful!" });
-            }
-            
-            else {
-                res.status(500).json({ message: "Error Upating service" });
-            }
-        });
+// Multer Mime Type Validation
+var upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
-);
-
-router.get("/service", (req, res, next) => {
-    ServiceModel.find().then(documents => {
-        if(documents){
-            res.status(200).json({
-                message: "Services fetched successfully!",
-                services: documents
-            });
-        }
-        else{
-            res.status(404).json({ message: "Service not found!" });
-        }
-       
-    });
+  },
 });
 
-router.get("/service/detail/:id", (req, res, next) => {
-    ServiceModel.findById(req.params.id).then(service => {
-      if (service) {
-        res.status(200).json(service);
-      } else {
-        res.status(404).json({ message: "service not found!" });
+app.put("/service/createimg/:id", upload.single("avatar"), async (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
+  avatar= url + "/public/" + req.file.filename;
+
+  await ServiceModel.findByIdAndUpdate(id, req.body, {new:true}).then(data => {
+    if (!data) {
+        res.status(404).send({
+            message: `service not found.`
+        });
+    }else{
+        res.send({ message: "service updated successfully." })
       }
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message
+        });
     });
   });
-  
-router.delete("/service/delete/:id", (req, res, next) => {
-    ServiceModel.deleteOne({ _id: req.params.id}).then(
-      result => {
-        if (result.n > 0) {
-          res.status(200).json({ message: "Deletion successful!" });
-        } else {
-            return res.status(401).json({ message: "Not authorized!!" });
-        }
-      }
-    );
-  });
 
-module.exports = router
+module.exports = app;

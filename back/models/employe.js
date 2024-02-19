@@ -1,29 +1,39 @@
 const mongoose = require("mongoose");
 
 const EmployeSchema = new mongoose.Schema({
-    Nom: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
+  Nom: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  Prenom : {
+    type: String,
+    required: true,
+  },
+  Mail: {
+    type: String,
+    required: true,
+  },
+  Phone: {
+    type: Number,
+    required: true,
+  },
+  Password :{
+    type: String,
+    required: true,
+  },
+  Services : 
+    {
+      type : mongoose.Schema.Types.ObjectId, ref: 'services'
     },
-    Prenom : {
-        type : String
-    },
-    Specialite : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'services'
-    },
-    imagePath: { 
-        type: String,
-        required: true 
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-const Employe = mongoose.model("employes", EmployeSchema);
 
-module.exports = Employe;
+const Service = mongoose.model("services", EmployeSchema);
+
+module.exports = Service;

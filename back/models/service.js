@@ -12,15 +12,14 @@ const ServiceSchema = new mongoose.Schema({
   Prix: Number,
   Commission: Number,
   CommissionEmploye: Number,
+  imagePath: {
+    type: String,
+  },
   Employes : [
     {
       type : mongoose.Schema.Types.ObjectId, ref: 'employes'
     }
   ],
-  imagePath: {
-    type: String,
-    required: true 
-  },
   created_at: {
     type: Date,
     default: Date.now

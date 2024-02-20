@@ -12,7 +12,19 @@ import { EtatListComponent } from './admin/etat/etat-list/etat-list.component';
 import { EtatCreateComponent } from './admin/etat/etat-create/etat-create.component';
 import { EtatDetailsComponent } from './admin/etat/etat-details/etat-details.component';
 import { ServiceUpdateComponent } from './admin/service/service-update/service-update.component';
-import { LoginComponent } from './admin/login/login.component';
+
+//auth
+
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { BoardEmployeComponent } from './board-employe/board-moderator.component';
+import { BoardUserComponent } from './board-user/board-user.component';
+
+import { httpInterceptorProviders } from './_helpers/http.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +36,14 @@ import { LoginComponent } from './admin/login/login.component';
     EtatCreateComponent,
     EtatDetailsComponent,
     ServiceUpdateComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardEmployeComponent,
+    BoardUserComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -32,7 +51,7 @@ import { LoginComponent } from './admin/login/login.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

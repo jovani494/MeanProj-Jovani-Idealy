@@ -5,7 +5,7 @@
         <a routerLink="/admin/etat/create" class="btn btn-success me-2">Créer</a>
         <div class="row">
           <div class="col-sm-6 col-md-3" *ngFor="let etat of etats">
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 shadow-sm" [ngStyle]="{'background-color': etat.Couleur}">
               <div class="card-body">
                 <h5 class="card-title">{{ etat.Nom }}</h5>
                 <p class="card-text">Couleur: {{ etat.Couleur }}</p>

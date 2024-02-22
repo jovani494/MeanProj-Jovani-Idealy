@@ -1,0 +1,4 @@
+.card-img-top {
+  height: 200px; /* Pour s'assurer que l'image ne dépasse pas la largeur de son conteneur */
+  width: auto; /* Pour conserver les proportions originales de l'image */
+}

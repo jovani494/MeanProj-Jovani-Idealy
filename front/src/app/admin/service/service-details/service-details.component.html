@@ -25,10 +25,10 @@
         <label><strong>CommissionEmploye : </strong></label>
         <span class="ms-2">{{ currentService.CommissionEmploye }} Ariary</span>
       </div>
-      <div *ngIf="currentService.Image" class="mb-3">
-        <img [src]="currentService.Image" class="img-fluid rounded" alt="Service Image">
+      <div *ngIf="currentService.avatar" class="mb-3">
+        <img [src]="currentService.avatar" class="img-fluid rounded" alt="Service Image">
       </div>
-      <div *ngIf="!currentService.Image" class="mb-3">
+      <div *ngIf="!currentService.avatar" class="mb-3">
         <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Placeholder Image">
       </div>
       <a routerLink="/admin/service/update/{{ currentService._id }}" class="btn btn-warning me-2">

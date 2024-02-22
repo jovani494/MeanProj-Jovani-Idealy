@@ -5,13 +5,15 @@ exports.create = async (req, res) => {
     if (!req.body.Nom && !req.body.Description && !req.body.Duree && !req.body.Commission && !req.body.Prix) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
-    
+
     const service = new ServiceModel({
         Nom : req.body.Nom,
         Description: req.body.Description,
         Duree: req.body.Duree ,
         Prix: req.body.Prix,
         Commission: req.body.Commission,
+        CommissionEmploye: req.body.CommissionEmploye,
+        avatar:"https://via.placeholder.com/350x200"
     });
     
     await service.save().then(data => {

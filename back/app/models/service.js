@@ -12,7 +12,7 @@ const ServiceSchema = new mongoose.Schema({
   Prix: Number,
   Commission: Number,
   CommissionEmploye: Number,
-  imagePath: {
+  avatar: {
     type: String,
   },
   Employes : [
@@ -24,15 +24,6 @@ const ServiceSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
-
-ServiceSchema.pre('save', function (next) {
-  // Vérifier si les champs nécessaires pour calculer la commission sont définis
-  if (this.Prix !== undefined && this.Commission !== undefined) {
-    // Calculer la commission de l'employé
-    this.CommissionEmploye = (this.Commission * this.Prix) / 100;
-  }
-  next();
 });
 
 const Service = mongoose.model("services", ServiceSchema);

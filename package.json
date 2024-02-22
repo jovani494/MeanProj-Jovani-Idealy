@@ -1,7 +1,7 @@
 {
     "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "start-server": "cd back && nodemon index.js",
+    "start-server": "cd back && nodemon server.js",
     "start-client": "cd front && ng serve"
   }
 }

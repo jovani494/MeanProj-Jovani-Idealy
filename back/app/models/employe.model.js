@@ -15,12 +15,11 @@ const EmployeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String,
+  },
   Phone: {
     type: Number,
-    required: true,
-  },
-  Password :{
-    type: String,
     required: true,
   },
   Services : 
@@ -34,6 +33,6 @@ const EmployeSchema = new mongoose.Schema({
 });
 
 
-const Service = mongoose.model("services", EmployeSchema);
+const Employe = mongoose.model("employes", EmployeSchema);
 
-module.exports = Service;
+module.exports = Employe;

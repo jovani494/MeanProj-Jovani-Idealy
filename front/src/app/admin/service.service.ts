@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpHeaders,
+  HttpErrorResponse,
+  HttpClient, } from '@angular/common/http';
+import { Observable, BehaviorSubject  } from 'rxjs';
 import { Service } from '../models/service.model';
+import { tap } from 'rxjs/operators'; // Importer tap depuis RxJS
 
 const baseUrl = 'http://localhost:8080/service';
 
@@ -9,11 +12,22 @@ const baseUrl = 'http://localhost:8080/service';
   providedIn: 'root'
 })
 export class ServiceService {
+  private servicesSubject = new BehaviorSubject<Service[]>([]);
 
-  constructor(private http: HttpClient) { }
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  constructor(private http: HttpClient) { this.loadServices(); }
+
+  private loadServices() {
+    this.http.get<Service[]>(baseUrl)
+    .subscribe(services => {
+      this.servicesSubject.next(services);
+    });
+  }
 
   getAll(): Observable<Service[]> {
-    return this.http.get<Service[]>(baseUrl);
+    this.loadServices();
+    return this.servicesSubject;
   }
 
   get(id: any): Observable<Service> {
@@ -28,7 +42,23 @@ export class ServiceService {
     return this.http.put(`${baseUrl}/update/${id}`, data);
   }
 
+  updateImg(id: any, profileImage: File): Observable<any> {
+    var formData: any = new FormData();
+    formData.append('avatar', profileImage);
+    return this.http.put(`${baseUrl}/createimg/${id}`, formData).pipe(
+      // Mettre à jour la liste après la suppression
+      tap(() => {
+        this.loadServices();
+      })
+    );
+  }
+
   delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/delete/${id}`);
+    return this.http.delete(`${baseUrl}/delete/${id}`).pipe(
+      // Mettre à jour la liste après la suppression
+      tap(() => {
+        this.loadServices();
+      })
+    );
   }
 }

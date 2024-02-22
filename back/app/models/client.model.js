@@ -8,15 +8,21 @@ const ClientSchema = new mongoose.Schema({
     lowercase: true,
   },
   Prenom: String,
-  Mail: String,
   Phone: Number,
-  Password : String,
+  avatar: {
+    type: String,
+  },
+  User: 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
   created_at: {
     type: Date,
     default: Date.now
   }
 });
 
-const Client = mongoose.model("cleints", ClientSchema);
+const Client = mongoose.model("clients", ClientSchema);
 
 module.exports = Client;

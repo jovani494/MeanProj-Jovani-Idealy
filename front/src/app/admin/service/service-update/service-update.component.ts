@@ -17,8 +17,11 @@ export class ServiceUpdateComponent implements OnInit{
     Duree : 0,
     Prix : 0,
     Commission : 0,
+    CommissionEmploye : 0,
     
   };
+
+  message: string = '';
 
   constructor(private serviceService: ServiceService, private route: ActivatedRoute, private router: Router) {}
 
@@ -43,10 +46,18 @@ export class ServiceUpdateComponent implements OnInit{
       .update(this.currentService._id, this.currentService)
       .subscribe({
         next: (res) => {
+          this.message = res.message;
           console.log(res);
         },
         error: (e) => console.error(e)
       });
+  }
+  calculCom(): void {
+    // Vérifiez d'abord si les valeurs Prix et Commission sont définies et non nulles
+    if (this.currentService.Prix !== undefined && this.currentService.Commission !== undefined) {
+      // Effectuez le calcul de la commission de l'employé en fonction du prix et de la commission
+      this.currentService.CommissionEmploye = (this.currentService.Prix * this.currentService.Commission) / 100;
+    }
   }
 
 }

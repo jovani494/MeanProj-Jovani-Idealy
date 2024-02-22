@@ -6,5 +6,5 @@ export class Service {
     Prix?: number;
     Commission?: number;
     CommissionEmploye?: number;;
-    Image?: string;
+    avatar?: string;
 }

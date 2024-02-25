@@ -8,12 +8,14 @@ const dbConfig = require("./app/config/db.config");
 
 const servicesroutes = require('./app/routes/serviceRoutes')
 const etatsroutes = require('./app/routes/etatRoutes')
+const clientsroutes = require('./app/routes/client.routes')
 
 
 const app = express();
 
 const corsOptions = {
   origin: ['http://localhost:4200'], // Remplacez par votre domaine autorisé
+  // origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
   allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
   credentials: true 
@@ -28,7 +30,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use('/service',servicesroutes).use('/',etatsroutes)
+app.use('/service',servicesroutes).use('/',etatsroutes).use('/client',clientsroutes)
 
 app.use(express.json());
 
@@ -43,7 +45,7 @@ app.use(
   })
 );
 
-const db = require("./app/models");
+const db = require("./app/models"); 
 const Role = db.role;
 db.mongoose
   .connect('mongodb+srv://ravelonarivojovani:MYmeanproject10@jovani0.bcg1atj.mongodb.net/mean?retryWrites=true&w=majority', {

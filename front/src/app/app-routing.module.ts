@@ -5,6 +5,8 @@ import { ServiceDetailsComponent } from './admin/service/service-details/service
 import { ServiceCreateComponent } from './admin/service/service-create/service-create.component';
 import { ServiceUpdateComponent } from './admin/service/service-update/service-update.component';
 
+import { ClientListComponent } from './admin/client/client-list/client-list.component';
+
 import { EtatListComponent } from './admin/etat/etat-list/etat-list.component';
 import { EtatCreateComponent } from './admin/etat/etat-create/etat-create.component';
 
@@ -17,16 +19,21 @@ import { BoardEmployeComponent } from './board-employe/board-moderator.component
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 
 const routes: Routes = [
-  //route service
-  {path:"admin/service", component: ServiceListComponent},
-  {path:"admin/service/detail/:id", component: ServiceDetailsComponent},
-  {path:"admin/service/create", component: ServiceCreateComponent},
-  {path:"admin/service/update/:id", component: ServiceUpdateComponent},
+  { path: 'admin', component: BoardAdminComponent , children : [
+            //route service
+        {path:"service", component: ServiceListComponent},
+        {path:"service/detail/:id", component: ServiceDetailsComponent},
+        {path:"service/create", component: ServiceCreateComponent},
+        {path:"service/update/:id", component: ServiceUpdateComponent},
 
-  //route etat
-  {path:"admin/etat", component: EtatListComponent},
-  {path:"admin/etat/create", component: EtatCreateComponent},
-  {path:"admin/etat/update/:id", component: EtatCreateComponent},
+        {path : "client", component: ClientListComponent},
+
+              //route etat
+        {path:"etat", component: EtatListComponent},
+        {path:"etat/create", component: EtatCreateComponent},
+        {path:"etat/update/:id", component: EtatCreateComponent},
+  ]
+},
 
   //auth
   { path: 'home', component: HomeComponent },
@@ -35,7 +42,6 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardEmployeComponent },
-  { path: 'admin', component: BoardAdminComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

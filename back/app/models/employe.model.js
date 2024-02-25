@@ -11,10 +11,11 @@ const EmployeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Mail: {
+  Gender : {
     type: String,
     required: true,
   },
+  availability: [{ start: String, end: String }],
   avatar: {
     type: String,
   },

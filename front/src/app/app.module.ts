@@ -24,6 +24,7 @@ import { BoardEmployeComponent } from './board-employe/board-moderator.component
 import { BoardUserComponent } from './board-user/board-user.component';
 
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
+import { ClientListComponent } from './admin/client/client-list/client-list.component';
 
 
 @NgModule({
@@ -42,7 +43,9 @@ import { httpInterceptorProviders } from './_helpers/http.interceptor';
     ProfileComponent,
     BoardAdminComponent,
     BoardEmployeComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    ClientListComponent,
+    
     
   ],
   imports: [

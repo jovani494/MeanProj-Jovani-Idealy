@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders,
-  HttpErrorResponse,
-  HttpClient, } from '@angular/common/http';
+import { HttpHeaders,HttpClient, } from '@angular/common/http';
 import { Observable, BehaviorSubject  } from 'rxjs';
 import { Service } from '../models/service.model';
 import { tap } from 'rxjs/operators'; // Importer tap depuis RxJS
+import { environment } from 'src/environements/environements';
 
-const baseUrl = 'http://localhost:8080/service';
+// const baseUrl = 'http://localhost:8080/service';
+const baseUrl = environment.apiUrl + "/service";
 
 @Injectable({
   providedIn: 'root'

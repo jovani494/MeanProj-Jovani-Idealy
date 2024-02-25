@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { StorageService } from '../_services/storage.service';
 
 @Component({
   selector: 'app-board-admin',
@@ -8,8 +9,12 @@ import { UserService } from '../_services/user.service';
 })
 export class BoardAdminComponent implements OnInit {
   content?: string;
+  isLoggedIn = false;
+  showAdminBoard = false;
+  private roles: string[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private storageService: StorageService,) { }
 
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe({
@@ -29,5 +34,15 @@ export class BoardAdminComponent implements OnInit {
         }
       }
     });
+
+    this.isLoggedIn = this.storageService.isLoggedIn();
+
+    if (this.isLoggedIn) {
+      const user = this.storageService.getUser();
+      this.roles = user.roles;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+
+    }
   }
+  
 }

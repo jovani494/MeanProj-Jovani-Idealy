@@ -1,8 +1,8 @@
 <div class="col-md-12">
-  <div class="card card-container">
+  <div class="card card-container contact-wrap">
     <img
       id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      src="../../assets/images/pngwing.png"
       class="profile-img-card"
     />
     <form
@@ -12,8 +12,59 @@
       #f="ngForm"
       novalidate
     >
+
       <div class="form-group">
-        <label for="username">Username</label>
+        <label class = "label" for="Nom">Nom</label>
+        <input
+          id="Nom"
+          type="text"
+          class="form-control"
+          name="Nom"
+          [(ngModel)]="form.Nom"
+          required
+          #Nom="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && Nom.errors }"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class = "label" for="Prenom">Prenom</label>
+        <input
+          id="Prenom"
+          type="text"
+          class="form-control"
+          name="Prenom"
+          [(ngModel)]="form.Prenom"
+          required
+          #Prenom="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && Prenom.errors }"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class = "label" for="Gender">Genre</label>
+        <select id="Gender" name="Gender" [(ngModel)]="form.Gender" required #Gender="ngModel">
+          <option value="homme">Homme</option>
+          <option value="femme">Femme</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class = "label" for="Phone">Téléphone</label>
+        <input
+          id="Phone"
+          type="number"
+          class="form-control"
+          name="Phone"
+          [(ngModel)]="form.Phone"
+          required
+          #Phone="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && Phone.errors }"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class = "label" for="username">Username</label>
         <input
           id="username"
           type="text"
@@ -37,7 +88,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label class = "label" for="email">Email</label>
         <input
           id="email"
           type="email"
@@ -57,7 +108,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label class = "label" for="password">Password</label>
         <input
           id="password"
           type="password"

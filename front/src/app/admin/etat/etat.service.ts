@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Etat } from 'src/app/models/etat.model';
+import { environment } from 'src/environements/environements';
 
-const baseUrl = 'http://localhost:8080/etat';
+// const baseUrl = 'http://localhost:8080/etat';
+const baseUrl = environment.apiUrl + "/etat"
 
 @Injectable({
   providedIn: 'root'

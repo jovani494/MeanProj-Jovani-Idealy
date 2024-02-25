@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Fancybox } from '@fancyapps/ui';
-
+declare var $: any; // Declare $ to use jQuery
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
@@ -74,6 +74,5 @@ export class ServiceListComponent implements OnInit{
       error: (e) => console.error(e)
     });
   }
-
 
 }

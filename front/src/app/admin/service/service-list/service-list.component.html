@@ -4,10 +4,11 @@
       <h4 class="mb-4">Services List</h4> 
       <a routerLink="/admin/service/create" 
       class="btn btn-success me-2">Créer</a>
+      
       <div class="row">
         <div class="col-sm-6 col-md-3" *ngFor="let service of services">
           <div class="card mb-4 shadow-sm">
-            <img [src]="service.avatar" class="card-img-top" alt="Service Image">
+            <img [src]="service.avatar" class="card-img-top" [alt]="service.Nom">
             <div class="card-body">
               <h5 class="card-title">{{ service.Nom }}</h5>
               <p class="card-text">Prix: {{ service.Prix }} Ariary</p>
@@ -44,3 +45,8 @@
     {{ message }}
   </div>
 </div>
+<div>
+
+
+
+

@@ -8,6 +8,10 @@ const ClientSchema = new mongoose.Schema({
     lowercase: true,
   },
   Prenom: String,
+  Gender : {
+    type: String,
+    required: true,
+  },
   Phone: Number,
   avatar: {
     type: String,

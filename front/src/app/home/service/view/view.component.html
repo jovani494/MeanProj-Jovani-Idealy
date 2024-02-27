@@ -1,0 +1,11 @@
+<div class="service-card">
+    <div class="service-details">
+      <h2>{{ currentService.Nom }}</h2>
+      <p>{{ currentService.Description }}</p>
+      <p><strong>Duration:</strong> {{ currentService.Duree }} minutes</p>
+      <p><strong>Price:</strong> ${{ currentService.Prix }}</p>
+    </div>
+    <div class="service-image">
+      <img [src]="currentService.avatar" alt="Service Image">
+    </div>
+  </div>

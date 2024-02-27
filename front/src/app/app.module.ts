@@ -25,6 +25,11 @@ import { BoardUserComponent } from './board-user/board-user.component';
 
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
 import { ClientListComponent } from './admin/client/client-list/client-list.component';
+import { CreateEmployeComponent } from './admin/employe/create-employe/create-employe.component';
+import { ListEmployeComponent } from './admin/employe/list-employe/list-employe.component';
+import { ServiceComponent } from './home/service/service.component';
+import { EquipeComponent } from './home/equipe/equipe.component';
+import { ViewComponent } from './home/service/view/view.component';
 
 
 @NgModule({
@@ -45,6 +50,11 @@ import { ClientListComponent } from './admin/client/client-list/client-list.comp
     BoardEmployeComponent,
     BoardUserComponent,
     ClientListComponent,
+    CreateEmployeComponent,
+    ListEmployeComponent,
+    ServiceComponent,
+    EquipeComponent,
+    ViewComponent,
     
     
   ],

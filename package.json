@@ -1,7 +1,16 @@
 {
-    "scripts": {
+  "name": "m1p10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "start-server": "cd back && nodemon server.js",
+    "start-server": "cd node-js-server && nodemon server.js",
     "start-client": "cd front && ng serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }

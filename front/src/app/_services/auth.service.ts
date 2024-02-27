@@ -7,7 +7,8 @@ import { environment } from '../../environements/environements';
 const AUTH_API = environment.apiUrl + '/api/auth/';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  withCredentials: true
 };
 
 @Injectable({
@@ -39,6 +40,25 @@ export class AuthService {
         Prenom,
         Gender,
         Phone
+      },
+      httpOptions
+    );
+  }
+
+  addEmp(username: string, email: string, password: string, 
+    Nom: String, Prenom: String, Gender : String, Phone: Number,  Services : string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'signup',   
+      {
+        username,
+        email,
+        password,
+        Nom,
+        Prenom,
+        Gender,
+        Phone,
+        Services,
+        
       },
       httpOptions
     );

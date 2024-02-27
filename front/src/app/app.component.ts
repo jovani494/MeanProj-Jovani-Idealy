@@ -15,6 +15,7 @@ export class AppComponent {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
+  _id?: string;
 
   eventBusSub?: Subscription;
 
@@ -35,6 +36,7 @@ export class AppComponent {
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       this.username = user.username;
+      this._id = user._id;
     }
 
     this.eventBusSub = this.eventBusService.on('logout', () => {

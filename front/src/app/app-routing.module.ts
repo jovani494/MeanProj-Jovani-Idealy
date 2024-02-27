@@ -10,6 +10,9 @@ import { ClientListComponent } from './admin/client/client-list/client-list.comp
 import { EtatListComponent } from './admin/etat/etat-list/etat-list.component';
 import { EtatCreateComponent } from './admin/etat/etat-create/etat-create.component';
 
+import { CreateEmployeComponent } from './admin/employe/create-employe/create-employe.component';
+import { ListEmployeComponent } from './admin/employe/list-employe/list-employe.component';
+
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -17,6 +20,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardEmployeComponent } from './board-employe/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
+
+import { ServiceComponent } from './home/service/service.component';
+import { ViewComponent } from './home/service/view/view.component';
+import { EquipeComponent } from './home/equipe/equipe.component';
 
 const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent , children : [
@@ -32,17 +39,42 @@ const routes: Routes = [
         {path:"etat", component: EtatListComponent},
         {path:"etat/create", component: EtatCreateComponent},
         {path:"etat/update/:id", component: EtatCreateComponent},
-  ]
-},
+
+              //route employés
+        {path:"employe/create", component : CreateEmployeComponent},
+        {path:"employe", component : ListEmployeComponent}  
+    ]
+  },
 
   //auth
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent , children : [
+      
+    ] 
+  },
+
+  {path : 'service', component : ServiceComponent },
+
+  {path : 'service/:id', component : ViewComponent},
+
+  {path : 'equipe', component : EquipeComponent},
+
   { path: 'login', component: LoginComponent },
+
   { path: 'register', component: RegisterComponent },
+
   { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardEmployeComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+
+  { path: 'user', component: BoardUserComponent , children : [
+
+    ] 
+  },
+
+  { path: 'employe', component: BoardEmployeComponent , children : [
+
+    ]
+  },
+
+  
 ];
 
 @NgModule({

@@ -33,10 +33,10 @@
           <a href="/admin" class="nav-link" routerLink="admin">Administration</a>
         </li>
         <li class="nav-item" *ngIf="showModeratorBoard">
-          <a href="/mod" class="nav-link" routerLink="mod">Employé</a>
+          <a href="/employe" class="nav-link" routerLink="employe">Employé</a>
         </li>
         <li class="nav-item">
-          <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
+          <a class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
         </li>
         <li class="nav-item">
           <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
@@ -46,8 +46,6 @@
         </li>
       </ul>
     </nav>
-
-    
   
     <div class="container">
       <router-outlet></router-outlet>

@@ -46,7 +46,7 @@ export class ServiceService {
     var formData: any = new FormData();
     formData.append('avatar', profileImage);
     return this.http.put(`${baseUrl}/createimg/${id}`, formData).pipe(
-      // Mettre à jour la liste après la suppression
+      
       tap(() => {
         this.loadServices();
       })

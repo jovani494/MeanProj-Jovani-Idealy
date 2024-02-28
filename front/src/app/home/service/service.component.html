@@ -1,5 +1,4 @@
 <!-- service.component.html -->
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -10,11 +9,12 @@
             <img [src]="service.avatar" class="card-img-top service-image" [alt]="service.Nom">
             <div class="card-body">
               <a routerLink="/service/{{ service._id }}"><h5 class="card-title">{{ service.Nom }}</h5></a>
-              <p class="card-text">Prix: {{ service.Prix }} Ariary</p>
+              <p class="card-text">Prix : {{ formatPrice(service.Prix) }} Ariary</p>
               <p class="card-text">Durée : {{ service.Duree }} Heures</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a routerLink="/service/{{ service._id }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                  <a routerLink="/service/{{ service._id }}" class="btn btn-sm btn-outline-info">Voir</a>
+                  <a routerLink="/appointment/{{ service._id }}" class="btn btn-sm btn-outline-success">Prendre rendez-vous</a>
                 </div>
               </div>
             </div>

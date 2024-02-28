@@ -9,7 +9,7 @@ import { ServiceService } from 'src/app/admin/service.service';
 })
 export class ServiceComponent {
   services?: Service[];
-
+  message = '';
   constructor(private serviceService: ServiceService) {}
 
   ngOnInit(): void {
@@ -24,6 +24,13 @@ export class ServiceComponent {
       },
       error: (e) => console.error(e)
     });
+  }
+
+  formatPrice(price: number | undefined): string {
+    if (price === undefined) {
+      return "N/A"; // ou tout autre valeur par défaut que vous souhaitez afficher
+    }
+    return price.toLocaleString('fr-FR');
   }
 
 }

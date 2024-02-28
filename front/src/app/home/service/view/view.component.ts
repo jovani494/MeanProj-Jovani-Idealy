@@ -34,4 +34,11 @@ export class ViewComponent {
     });
   }
 
+  formatPrice(price: number | undefined): string {
+    if (price === undefined) {
+      return "N/A"; // ou tout autre valeur par défaut que vous souhaitez afficher
+    }
+    return price.toLocaleString('fr-FR');
+  }
+
 }

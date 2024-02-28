@@ -15,7 +15,6 @@ export class BoardUserComponent implements OnInit {
   content?: string;
   client: Client | undefined;
   clientLog : any;
-  preview?: string;
   form: FormGroup;
 
   message: string = '';

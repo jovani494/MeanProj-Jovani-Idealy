@@ -25,6 +25,13 @@ import { ServiceComponent } from './home/service/service.component';
 import { ViewComponent } from './home/service/view/view.component';
 import { EquipeComponent } from './home/equipe/equipe.component';
 
+import { ProfileEmpComponent } from './employe/profile/profileEmp.component';
+import { EmploiDuTempsComponent } from './employe/emploi-du-temps/emploi-du-temps.component';
+import { EdtCreateComponent } from './employe/emploi-du-temps/edt-create/edt-create.component';
+import { MytasksComponent } from './employe/mytasks/mytasks.component';
+
+import { AppointmentCreateComponent } from './home/appointment-create/appointment-create.component';
+
 const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent , children : [
             //route service
@@ -58,6 +65,8 @@ const routes: Routes = [
 
   {path : 'equipe', component : EquipeComponent},
 
+  {path : 'appointment/:id', component : AppointmentCreateComponent },
+
   { path: 'login', component: LoginComponent },
 
   { path: 'register', component: RegisterComponent },
@@ -70,11 +79,13 @@ const routes: Routes = [
   },
 
   { path: 'employe', component: BoardEmployeComponent , children : [
-
+        {path : 'profile', component : ProfileEmpComponent},
+        {path : 'edt', component : EmploiDuTempsComponent},
+        {path : 'edt/create', component : EdtCreateComponent},
+        {path : 'mytasks', component : MytasksComponent}
     ]
   },
 
-  
 ];
 
 @NgModule({

@@ -2,10 +2,15 @@
     <div class="service-details">
       <h2>{{ currentService.Nom }}</h2>
       <p>{{ currentService.Description }}</p>
-      <p><strong>Duration:</strong> {{ currentService.Duree }} minutes</p>
-      <p><strong>Price:</strong> ${{ currentService.Prix }}</p>
+      <p><strong>Durée :</strong> {{ currentService.Duree }} heures</p>
+      <p><strong>Prix :</strong> {{ formatPrice(currentService.Prix) }} Ariary</p>
     </div>
     <div class="service-image">
       <img [src]="currentService.avatar" alt="Service Image">
     </div>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+  <div class="btn-group">
+    <a routerLink="/appointment/{{ currentService._id }}" class="btn btn-sm btn-outline-primary">Prendre rendez-vous</a>
   </div>
+</div>

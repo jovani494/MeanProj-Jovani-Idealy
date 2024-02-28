@@ -30,6 +30,11 @@ import { ListEmployeComponent } from './admin/employe/list-employe/list-employe.
 import { ServiceComponent } from './home/service/service.component';
 import { EquipeComponent } from './home/equipe/equipe.component';
 import { ViewComponent } from './home/service/view/view.component';
+import { EmploiDuTempsComponent } from './employe/emploi-du-temps/emploi-du-temps.component';
+import { ProfileEmpComponent } from './employe/profile/profileEmp.component';
+import { EdtCreateComponent } from './employe/emploi-du-temps/edt-create/edt-create.component';
+import { AppointmentCreateComponent } from './home/appointment-create/appointment-create.component';
+import { MytasksComponent } from './employe/mytasks/mytasks.component';
 
 
 @NgModule({
@@ -55,6 +60,11 @@ import { ViewComponent } from './home/service/view/view.component';
     ServiceComponent,
     EquipeComponent,
     ViewComponent,
+    EmploiDuTempsComponent,
+    ProfileEmpComponent,
+    EdtCreateComponent,
+    AppointmentCreateComponent,
+    MytasksComponent,
     
     
   ],

@@ -4,6 +4,7 @@ import { environment } from 'src/environements/environements';
 import { HttpHeaders,HttpClient, } from '@angular/common/http';
 import { Observable, BehaviorSubject  } from 'rxjs';
 import { EmployeModel } from '../models/employe.model';
+import { tap } from 'rxjs/operators';
 
 const baseUrl = environment.apiUrl + "/appointment";
 
@@ -17,6 +18,14 @@ export class RendezvousService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) {  }  
+  iid : any;
+
+  private loadServices(id : string) {
+    this.http.get<RendezvousModel[]>(`${baseUrl}/mytasks/${id}`)
+    .subscribe(appointments => {
+      this.appointmentsSubject.next(appointments);
+    });
+  }
 
   getAllAppointments(): Observable<RendezvousModel[]> {
     return this.http.get<RendezvousModel[]>(`${baseUrl}/all`)
@@ -26,8 +35,13 @@ export class RendezvousService {
     return this.http.post(`${baseUrl}/create`, appointmentData);
   }
 
-  updateAppointment(appointmentId: string, newState: any): Observable<any> {
-    return this.http.put(`${baseUrl}/update/${appointmentId}`, newState);
+  updateAppointment(appointmentId: string, Etat: any): Observable<any> {
+    return this.http.put(`${baseUrl}/update/${appointmentId}`, Etat).pipe(
+      
+      tap(() => {
+        this.loadServices(this.iid);
+      })
+    );
   }
 
   getClientAppointments(clientId: string): Observable<RendezvousModel[]> {
@@ -39,6 +53,9 @@ export class RendezvousService {
   }
 
   getEmployeeTasks(employeeId: string): Observable<RendezvousModel[]> {
-    return this.http.get<RendezvousModel[]>(`${baseUrl}/mytasks/${employeeId}`)
+    this.iid = employeeId;
+    this.loadServices(employeeId);
+    return this.appointmentsSubject;
   }
+  // return this.http.get<RendezvousModel[]>(`${baseUrl}/mytasks/${employeeId}`)
 }

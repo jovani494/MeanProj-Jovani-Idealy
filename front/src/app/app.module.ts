@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,8 @@ import { ProfileEmpComponent } from './employe/profile/profileEmp.component';
 import { EdtCreateComponent } from './employe/emploi-du-temps/edt-create/edt-create.component';
 import { AppointmentCreateComponent } from './home/appointment-create/appointment-create.component';
 import { MytasksComponent } from './employe/mytasks/mytasks.component';
+import { MyAppointmentsComponent } from './home/my-appointments/my-appointments.component';
+import { AppointmentsComponent } from './admin/appointments/appointments.component';
 
 
 @NgModule({
@@ -65,6 +68,8 @@ import { MytasksComponent } from './employe/mytasks/mytasks.component';
     EdtCreateComponent,
     AppointmentCreateComponent,
     MytasksComponent,
+    MyAppointmentsComponent,
+    AppointmentsComponent,
     
     
   ],
@@ -73,7 +78,8 @@ import { MytasksComponent } from './employe/mytasks/mytasks.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragDropModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

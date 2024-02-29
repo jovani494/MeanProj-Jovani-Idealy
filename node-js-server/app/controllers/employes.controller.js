@@ -22,7 +22,7 @@ exports.findOne = async (req, res) => {
 
 exports.getEmploye = async (req, res) => {
     try {
-        const employe = await EmployeModel.findOne({User: req.params.id}).populate('Services');;
+        const employe = await EmployeModel.findOne({User: req.params.id}).populate('Services');
         res.status(200).json(employe);
     } catch(error) {
         res.status(404).json({ message: error.message});

@@ -4,6 +4,7 @@ import { ServiceListComponent } from './admin/service/service-list/service-list.
 import { ServiceDetailsComponent } from './admin/service/service-details/service-details.component';
 import { ServiceCreateComponent } from './admin/service/service-create/service-create.component';
 import { ServiceUpdateComponent } from './admin/service/service-update/service-update.component';
+import { AppointmentsComponent } from './admin/appointments/appointments.component';
 
 import { ClientListComponent } from './admin/client/client-list/client-list.component';
 
@@ -24,6 +25,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { ServiceComponent } from './home/service/service.component';
 import { ViewComponent } from './home/service/view/view.component';
 import { EquipeComponent } from './home/equipe/equipe.component';
+import { MyAppointmentsComponent } from './home/my-appointments/my-appointments.component';
 
 import { ProfileEmpComponent } from './employe/profile/profileEmp.component';
 import { EmploiDuTempsComponent } from './employe/emploi-du-temps/emploi-du-temps.component';
@@ -41,6 +43,8 @@ const routes: Routes = [
         {path:"service/update/:id", component: ServiceUpdateComponent},
 
         {path : "client", component: ClientListComponent},
+
+        {path : "appointments", component : AppointmentsComponent},
 
               //route etat
         {path:"etat", component: EtatListComponent},
@@ -74,7 +78,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
 
   { path: 'user', component: BoardUserComponent , children : [
-
+      {path : 'myappointments', component : MyAppointmentsComponent}
     ] 
   },
 

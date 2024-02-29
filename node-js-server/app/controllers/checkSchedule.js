@@ -26,7 +26,7 @@ exports.checkSchedule = async (req, res, next) => {
             (appointmentTime >= eveningStart && appointmentTime <= eveningEnd)) {
             next(); // Appointment time is within schedule, proceed
         } else {
-            return res.status(400).json({ message: "Appointment time is not within employee's schedule" });
+            return res.status(400).json({ message: "Le rendez-vous sélectionné n'est pas dans l'emploi du temps de l'employé " });
         }
    
 };

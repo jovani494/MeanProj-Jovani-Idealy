@@ -31,7 +31,7 @@ export class ProfileEmpComponent implements OnInit {
 
   gEmp() : void{
     this.employeLog = this.storageService.getUser();
-    const employeId = this.employeLog.id; // Mettez l'ID du client que vous souhaitez récupérer
+    const employeId = this.employeLog.id; 
     this.employeService.getEmploye(employeId)
       .subscribe(
         (employe: EmployeModel) => {

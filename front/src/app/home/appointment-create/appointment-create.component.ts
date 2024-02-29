@@ -6,6 +6,7 @@ import { UserService } from 'src/app/_services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeModel } from 'src/app/models/employe.model';
+import { ClientService } from 'src/app/admin/client/client.service';
 
 @Component({
   selector: 'app-appointment-create',
@@ -14,8 +15,9 @@ import { EmployeModel } from 'src/app/models/employe.model';
 })
 export class AppointmentCreateComponent implements OnInit {
   employes?: EmployeModel[]
-  clientLog : any;
+  userLog : any;
   serviceId?: any ;
+  message ?: string = "";
 
   appointment: RendezvousModel = {
     DateRdv : "",
@@ -28,6 +30,7 @@ export class AppointmentCreateComponent implements OnInit {
   submitted = false;
 
   constructor(
+    private clientService : ClientService,
     private rendezvousService : RendezvousService,
     public fb: FormBuilder,
     private userService: UserService,
@@ -36,29 +39,49 @@ export class AppointmentCreateComponent implements OnInit {
     private route: ActivatedRoute) {}
 
     saveService() : void {
-      this.clientLog = this.storageService.getUser();
-      const clientId = this.clientLog.id;
+      this.userLog = this.storageService.getUser();
+      const userId = this.userLog.id;
 
       this.route.params.subscribe(params => {
         this.serviceId = params['id']; // Récupération de l'ID du service depuis les paramètres de l'URL
       });
 
-      const data = {
-        DateRdv : this.appointment.DateRdv,
-        Heure: this.appointment.Heure,
-        Client: clientId,// L'ID du client (assurez-vous d'utiliser le bon type ici)
-        Service: this.serviceId, // L'ID du service
-        Employe: this.appointment.Employe, // L'ID de l'employé
-        Etat: "65d10c1ef1e2899e2f75ccff"
-      };
+      this.clientService.getClient(userId).subscribe({
+        next: (client) => {
+          const clientId = client._id;
+
+          const data = {
+            DateRdv : this.appointment.DateRdv,
+            Heure: this.appointment.Heure,
+            Client: clientId,// L'ID du client (assurez-vous d'utiliser le bon type ici)
+            Service: this.serviceId, // L'ID du service
+            Employe: this.appointment.Employe, // L'ID de l'employé
+            Etat: "65d10c1ef1e2899e2f75ccff"
+          };
+      
+          this.rendezvousService.createAppointment(data).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.submitted = true;
+              this.router.navigate(['/service']);
+            },
+            error: (e) => {
+              console.error(e);
+              if(e.error && e.error.message) {
+                this.message = e.error.message; // Assigning the error message to the 'message' variable
+              } else {
+                this.message = "An error occurred while processing your request."; // Default error message
+              }
+            }
+          });
   
-      this.rendezvousService.createAppointment(data).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.submitted = true;
-          this.router.navigate(['/service']);
         },
-        error: (e) => console.error(e)
+        error: (error) => {
+          console.error(error);
+          if(error.error && error.error.message) {
+            this.message = error.error.message; // Assigning the error message to the 'message' variable
+          } 
+        }
       });
     }
   

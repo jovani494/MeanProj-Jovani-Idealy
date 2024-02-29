@@ -18,7 +18,6 @@ export class ServiceUpdateComponent implements OnInit{
     Prix : 0,
     Commission : 0,
     CommissionEmploye : 0,
-    
   };
 
   message: string = '';

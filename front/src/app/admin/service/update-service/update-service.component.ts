@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './update-service.component.html',
-  styleUrl: './update-service.component.css'
+  styleUrls: ['./update-service.component.css']
 })
 export class UpdateServiceComponent {
 

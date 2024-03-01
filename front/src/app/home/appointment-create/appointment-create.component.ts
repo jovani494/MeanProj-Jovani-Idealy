@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RendezvousService } from 'src/app/_services/rendezvous.service';
 import { RendezvousModel } from 'src/app/models/rendezvous.model';
 import { StorageService } from 'src/app/_services/storage.service';
-import { UserService } from 'src/app/_services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeModel } from 'src/app/models/employe.model';
@@ -18,6 +17,7 @@ export class AppointmentCreateComponent implements OnInit {
   userLog : any;
   serviceId?: any ;
   message ?: string = "";
+  clientId : any;
 
   appointment: RendezvousModel = {
     DateRdv : "",
@@ -33,7 +33,6 @@ export class AppointmentCreateComponent implements OnInit {
     private clientService : ClientService,
     private rendezvousService : RendezvousService,
     public fb: FormBuilder,
-    private userService: UserService,
     private storageService: StorageService,
     private router: Router,
     private route: ActivatedRoute) {}
@@ -48,12 +47,12 @@ export class AppointmentCreateComponent implements OnInit {
 
       this.clientService.getClient(userId).subscribe({
         next: (client) => {
-          const clientId = client._id;
+          this.clientId = client._id;
 
           const data = {
             DateRdv : this.appointment.DateRdv,
             Heure: this.appointment.Heure,
-            Client: clientId,// L'ID du client (assurez-vous d'utiliser le bon type ici)
+            Client: this.clientId,// L'ID du client (assurez-vous d'utiliser le bon type ici)
             Service: this.serviceId, // L'ID du service
             Employe: this.appointment.Employe, // L'ID de l'employé
             Etat: "65d10c1ef1e2899e2f75ccff"

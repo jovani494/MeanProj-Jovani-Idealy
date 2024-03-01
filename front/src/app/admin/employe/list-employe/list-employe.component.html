@@ -8,4 +8,8 @@
       <p><strong>Téléphone:</strong> {{ employe.Phone }}</p>
       <p><strong>Service:</strong> {{ employe.Services?.Nom }}</p>
     </div>
+    <button class="btn btn-sm btn-danger" (click)="deleteEmploye(employe._id)">Delete</button>
+</div>
+<div *ngIf="message" class="alert alert-success">
+  {{ message }}
 </div>

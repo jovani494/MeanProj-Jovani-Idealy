@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from 'src/app/models/service.model';
 import { ServiceService } from 'src/app/admin/service.service';
+import { ClientService } from 'src/app/admin/client/client.service';
+import { StorageService } from 'src/app/_services/storage.service';
 
 @Component({
   selector: 'app-view',
@@ -17,11 +19,27 @@ export class ViewComponent {
     Commission : 0,
     
   };
+  userLog : any;
+  clientId : any;
 
-  constructor(private serviceService : ServiceService, private route: ActivatedRoute,private router: Router){}
+  constructor(private serviceService : ServiceService, 
+              private storageService : StorageService,
+              private clientService : ClientService,
+              private route: ActivatedRoute,
+              private router: Router){}
 
   ngOnInit(): void {
       this.getService(this.route.snapshot.params['id']);
+      this.userLog = this.storageService.getUser();
+      const userId = this.userLog.id;
+      this.clientService.getClient(userId).subscribe({
+      next: (client) => {
+        this.clientId = client._id;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   getService(id: string): void {

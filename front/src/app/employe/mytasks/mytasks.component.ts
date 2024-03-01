@@ -21,6 +21,7 @@ export class MytasksComponent implements OnInit {
   errorMessage?: "";
   test1?: "";
   test2?: "";
+  totalCommission: number = 0;
 
   currentRdv: RendezvousModel = {
     Etat : ''
@@ -96,6 +97,10 @@ export class MytasksComponent implements OnInit {
           // Gérer l'erreur si nécessaire
         }
       );
+  }
+
+  calculateTotals(): void {
+    this.totalCommission = this.appointments.reduce((acc, appointment) => acc + (appointment.Service?.CommissionEmploye || 0), 0);
   }
 
 }

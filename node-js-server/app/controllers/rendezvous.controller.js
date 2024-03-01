@@ -1,14 +1,63 @@
 
 const rendezvous = require('../models/rendezvous.model');
 const employe = require('../models/employe.model');
+const service = require('../models/service');
 
 exports.findAll = async (req, res) => {
     try {
-        const rdv = await rendezvous.find().populate('Client')
+        const rdvs = await rendezvous.find().populate('Client')
         .populate('Service')
         .populate('Employe')
-        .populate('Etat');;
-        res.status(200).json(rdv);
+        .populate('Etat');
+
+        rdvs.forEach(rdv => {
+            let totalServicePrice = 0;
+            let totalEmployeeCommission = 0;
+    
+            if (Array.isArray(rdv.Service)) {
+                // Si le rendez-vous a plusieurs services
+                rdv.Service.forEach(service => {
+                    totalServicePrice += service.Prix;
+                    totalEmployeeCommission += service.CommissionEmploye;
+                });
+            } else {
+                // Si le rendez-vous a un seul service
+                totalServicePrice = rdv.Service.Prix;
+                totalEmployeeCommission = rdv.Service.CommissionEmploye;
+            }
+    
+            rdv.totalServicePrice = totalServicePrice;
+            rdv.totalEmployeeCommission = totalEmployeeCommission;
+
+        });
+        // Calculer les statistiques
+        const totalRdvCount = rdvs.length;
+        const rdvCountByEmployee = {};
+        const rdvCountByService = {};
+
+        rdvs.forEach(rdv => {
+            const employeeId = rdv.Employe.Nom.toString();
+            const serviceId = rdv.Service.Nom.toString();
+
+            // Compter le nombre de rendez-vous par employé
+            if (!rdvCountByEmployee[employeeId]) {
+                rdvCountByEmployee[employeeId] = 0;
+            }
+            rdvCountByEmployee[employeeId]++;
+
+            // Compter le nombre de rendez-vous par service
+            if (!rdvCountByService[serviceId]) {
+                rdvCountByService[serviceId] = 0;
+            }
+            rdvCountByService[serviceId]++;
+        });
+
+        res.status(200).json({
+            rdvs,
+            totalRdvCount,
+            rdvCountByEmployee,
+            rdvCountByService
+        });
     } catch(error) {
         res.status(404).json({message: error.message});
     }
@@ -40,7 +89,7 @@ exports.findClient = async (req, res) => {
 exports.findTasks = async (req, res) => {
     try {
         const id = req.params.id;
-        const rdv = await rendezvous.find({Employe : id}).populate('Client').populate('Etat')
+        const rdv = await rendezvous.find({Employe : id}).populate('Client').populate('Etat').populate('Service')
         res.status(200).json(rdv);
     } catch(error) {
         res.status(404).json({message: error.message});

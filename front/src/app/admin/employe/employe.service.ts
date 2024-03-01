@@ -11,11 +11,20 @@ import { tap } from 'rxjs/operators';
 export class EmployeService {
 
   private apiUrl = environment.apiUrl + "/employe";
+  private employesSubject = new BehaviorSubject<EmployeModel[]>([]);
   private employeSubject = new BehaviorSubject<EmployeModel | null>(null)
   constructor(private http: HttpClient) { }
 
+  loadEmployes(){
+    this.http.get<EmployeModel[]>(this.apiUrl)
+    .subscribe(clients => {
+      this.employesSubject.next(clients);
+    });
+  }
+
   getAllEmployes(): Observable<EmployeModel[]> {
-    return this.http.get<EmployeModel[]>(`${this.apiUrl}`);
+    this.loadEmployes();
+    return this.employesSubject;
   }
 
   private loadEmploye(id: any) {
@@ -36,6 +45,14 @@ export class EmployeService {
       
       tap(() => {
         this.loadEmploye(id);
+      })
+    );
+  }
+
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(
+      tap(() => {
+        this.loadEmployes();
       })
     );
   }

@@ -50,9 +50,16 @@ export class ClientService {
     var formData: any = new FormData();
     formData.append('avatar', profileImage);
     return this.http.put(`${baseUrl}/createimg/${id}`, formData).pipe(
-      
       tap(() => {
         this.loadClient(id);
+      })
+    );
+  }
+
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${baseUrl}/delete/${id}`).pipe(
+      tap(() => {
+        this.loadClients();
       })
     );
   }
